@@ -1,0 +1,12 @@
+{
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint":true,
+        "source.fixAll.tslint":true, 
+        "source.organizeImports": true
+    },
+
+    //disable vscode's default impact on javascript and typescript
+    "javascript.validate.enable": false,
+    "typescript.validate.enable": false
+}
