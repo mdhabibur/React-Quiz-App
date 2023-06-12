@@ -23,7 +23,7 @@ export default function Signup() {
                 <TextInput type="text" placeholder="confirm password" icon="lock_clock"/>
 
                 <Checkbox text="I agree to the Terms & Conditions" />
-                <Button> Submit Now</Button>
+                <Button> <span>Submit Now</span></Button>
 
                 <div className="info">
                 Already have an account? <a href="login.html">Login</a> instead.
