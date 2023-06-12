@@ -8,6 +8,8 @@ import Quiz from "./pages/Quiz";
 import Result from "./pages/Result";
 
 import { AuthProvider } from "../contexts/AuthContext";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
 
 function App() {
@@ -19,10 +21,14 @@ function App() {
     <Layout>
        <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/signup" element={<Signup />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/quiz" element={<Quiz />} />
-        <Route exact path="/result" element={<Result />} />
+
+        <Route exact path="/signup" element={<PublicRoute component={Signup} />} />
+        <Route exact path="/login" element={<PublicRoute component={Login} />} />
+
+        <Route exact path="/quiz" element={<PrivateRoute component={Quiz} />} />
+        <Route exact path="/result" element={<PrivateRoute component={Result} />} />
+
+
           {/* <Home />
           <Signup /> 
           <Login />
@@ -30,6 +36,7 @@ function App() {
           <Result /> */}
 
        </Routes>
+       
       </Layout>
     </AuthProvider>
 
