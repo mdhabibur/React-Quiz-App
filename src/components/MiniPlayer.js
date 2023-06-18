@@ -1,16 +1,44 @@
 import classes from "../styles/MiniPlayer.module.css";
 import image from "../assets/images/3.jpg";
+import { useRef, useState } from "react";
+import ReactPlayer from 'react-player/youtube';
 
-export default function MiniPlayer() {
+export default function MiniPlayer({title, id}) {
+
+    const buttonRef = useRef(); //taking null reference
+    const [status, setStatus] = useState(false);
+    const videoUrl = `https://www.youtube.com/watch?v=${id}`
+
+
+    function toggleMiniPlayer(){
+
+        if(!status){
+            buttonRef.current.classList.remove(classes.floatingBtn);
+            setStatus(true);
+        }else{
+
+            buttonRef.current.classList.add(classes.floatingBtn);
+            setStatus(false);
+
+        }
+
+    }
+
+    //after toggling the mini player, when the video comes, it should display the proper video with that video id. for that we will need a video player, but we will create it
+    //we will use a npm package for that called "npm install react-player" for loading youtube video
+
+
     return(
 
-        <div className= { `${classes.miniPlayer} ${classes.floatingBtn}` } >
+        <div className= { `${classes.miniPlayer} ${classes.floatingBtn}` } ref={buttonRef} onClick={toggleMiniPlayer} >
 
-        <span className={`material-icons-outlined ${classes.open}`}> play_circle_filled </span>
-        <span className={`material-icons-outlined ${classes.close}`}> close </span>
+        <span className={`material-icons-outlined ${classes.open} } `}> play_circle_filled </span>
+        <span className={`material-icons-outlined ${classes.close}`} onClick={toggleMiniPlayer} > close </span>
 
-        <img src={image} alt="mini player image" />
-        <p>#23 React Hooks Bangla - React useReducer hook Bangla</p>
+
+        <ReactPlayer url={videoUrl} width="300px" height="168px" playing={status} controls />
+
+        <p>{title}</p>
         </div>
 
 

@@ -1,7 +1,7 @@
 import Answers from "../Answers";
 import ProgressBar from "../ProgressBar";
 import MiniPlayer from "../MiniPlayer";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useReducer, useState } from "react";
 import useQuestions from "../../hooks/useQuestions";
 import _ from 'lodash';
@@ -72,6 +72,12 @@ export default function Quiz() {
     const {currentUser} = useAuth(); //got the current user
     const navigate = useNavigate();
 
+    // const location = useLocation();
+    // const videoTitle = location.state.videoTitle;
+    
+
+  
+
     useEffect(() => {
         dispatch({
             type: "questions", //action type
@@ -129,11 +135,10 @@ export default function Quiz() {
             [id]: qna
         });
 
-        navigate({
-            pathname: `/result/${id}`,
+        navigate(`/result/${id}`, {
             state: {
                 qna,
-            }
+            },
 
         });
 
@@ -153,11 +158,15 @@ export default function Quiz() {
                     <h1> {qna[currentQuestion].title } </h1>
                     <h4>Question can have multiple answers</h4>
 
-                    <Answers options = { qna[currentQuestion].options }  handleChange = {handleAnswerChange}  />
+                    <Answers input={true} options = { qna[currentQuestion].options }  handleChange = {handleAnswerChange}  />
                     {/* handleAnswerChange will be called inside the dispatch when the user clicks the checkbox of a question */}
 
                     <ProgressBar prev={prevQuestion} next={nextQuestion} progress={percentage} submit={submit} />
-                    <MiniPlayer />
+                    <MiniPlayer id={id} title={qna[currentQuestion].title} />
+
+
+                    {/* <MiniPlayer id={id} title={videoTitle} /> */}
+                    {/* title = {videoTitle} is not working, displaying null object */}
                 
                 </>
                 )

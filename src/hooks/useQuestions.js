@@ -3,10 +3,9 @@
 //as this custom hook is in separate file so it is reusable and modular
 //as importing videos quiz , answers are side effect so need to use the useEffect() hook here
 
-import { useEffect } from "react";
-import {get, getDatabase, limitToFirst, orderByKey, query, ref, startAt} from "firebase/database";
-import { useState } from "react";
-import app from "../firebase";
+import { get, getDatabase, orderByKey, query, ref } from "firebase/database";
+import { useEffect, useState } from "react";
+
 
 export default function useQuestions(videoID){
 
@@ -25,7 +24,7 @@ export default function useQuestions(videoID){
         //database related works
         async function fetchQuestions(){
             //first need to make connection with the firebase db
-            const db = getDatabase(app);
+            const db = getDatabase();
             const quizRef = ref(db, "quiz/" + videoID + "/questions");
             const quizQuery = query(
                 quizRef,
@@ -50,14 +49,20 @@ export default function useQuestions(videoID){
                         //and need to store the videos in an array from that object
                         //by taking value from the object we convert them to array
                         return [...prevQuestions, ...Object.values(snapshot.val()) ] 
+                        
 
                     });
+                    console.log(questions);
+
+                    
 
 
                 }else {
                     //no snapshot/data exists
 
                 }
+
+                console.log(questions);
                 
 
 
@@ -66,8 +71,6 @@ export default function useQuestions(videoID){
                 setLoading(false);
                 setError(true);
             }
-
-
 
         }
         fetchQuestions();
